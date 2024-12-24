@@ -1,5 +1,6 @@
 package com.angad.contactapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,13 +12,31 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
+import com.angad.contactapp.data.database.DatabaseInit
+import com.angad.contactapp.data.entities.Contact
 import com.angad.contactapp.ui.theme.ContactAppTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.Calendar
+import java.util.Date
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("CoroutineCreationDuringComposition")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+//            lifecycleScope.launch(Dispatchers.IO) {
+//                DatabaseInit.getDatabase( this@MainActivity).dao.upsertContact(
+//                    Contact(
+//                        name = "Angad",
+//                        phoneNo = "65264",
+//                        email = "angad@gmail.com",
+//                        dateOfEdit = Calendar.getInstance().timeInMillis    //  For currentTime
+//                    )
+//                )
+//            }
             ContactAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
