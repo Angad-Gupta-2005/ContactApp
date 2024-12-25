@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -13,8 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.angad.contactapp.data.database.DatabaseInit
 import com.angad.contactapp.data.entities.Contact
+import com.angad.contactapp.data.repository.ContactRepository
+import com.angad.contactapp.presentation.ContactViewModel
+import com.angad.contactapp.presentation.navigation.appnavigation.AppNavigation
 import com.angad.contactapp.ui.theme.ContactAppTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,12 +42,18 @@ class MainActivity : ComponentActivity() {
 //                    )
 //                )
 //            }
+
+        //    Creating an object of repository
+            val repository = ContactRepository(DatabaseInit.getDatabase(this).dao)
+        //    Creating an object of viewModel
+            val viewModel = viewModel{
+                ContactViewModel(repository)
+            }
             ContactAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    Box(modifier = Modifier.padding(innerPadding)) {
+                        AppNavigation(viewModel = viewModel)
+                    }
                 }
             }
         }

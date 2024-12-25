@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.21"
+    kotlin("plugin.serialization") version "2.1.0"
 }
 
 android {
@@ -79,4 +80,11 @@ dependencies {
     //  Hilt dependency
     implementation("com.google.dagger:hilt-android:2.51.1")
     ksp("com.google.dagger:hilt-android-compiler:2.51.1")
+
+    //  Navigation dependency
+    implementation("androidx.navigation:navigation-compose:2.8.5")
+
+    //  Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0-RC")
+
 }

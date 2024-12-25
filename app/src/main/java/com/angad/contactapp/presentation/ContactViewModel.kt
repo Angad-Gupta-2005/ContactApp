@@ -9,10 +9,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class ContactViewModel(private val repository: ContactRepository): ViewModel() {
+class ContactViewModel(
+    private val repository: ContactRepository
+): ViewModel() {
 
 //    Managing the app state
-    val _state = MutableStateFlow<AppState>(AppState.Loading)
+    private val _state = MutableStateFlow<AppState>(AppState.Loading)
     val state = _state.asStateFlow()
     init {
         viewModelScope.launch {
@@ -21,6 +23,17 @@ class ContactViewModel(private val repository: ContactRepository): ViewModel() {
             }
         }
     }
+
+//    Function that add and edit the contact into the database
+    fun upsertContact(contact: Contact) = viewModelScope.launch {
+        repository.upsertContact(contact)
+    }
+
+//    Function that delete the contact into the database
+    fun deleteContact(contact: Contact) = viewModelScope.launch {
+        repository.deleteContact(contact)
+    }
+
 }
 
 //  State of the app
